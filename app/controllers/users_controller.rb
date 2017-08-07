@@ -13,7 +13,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.update(user_params)
     render json: @user
-    respond_with @user, json: @user
+    # respond_with @user, json: @user
+  end
+
+  def delete
+
   end
 
   private
