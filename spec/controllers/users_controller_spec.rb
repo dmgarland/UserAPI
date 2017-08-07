@@ -65,19 +65,16 @@ RSpec.describe UsersController, type: :controller do
   describe "DELETE /users" do
     before do
       @user = User.create!(first_name: "Dan", last_name: "Garland")
-      destroy :delete, params: {:id => @user.id}, :format => :json
+      delete :destroy, params: {:id => @user.id}, :format => :json
     end
 
     it "returns 200" do
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(204)
     end
 
-    it "returns JSON" do 
-      expect(response.content_type).to eq('application/json')
-      expect{ JSON(response.body) }.not_to raise_exception
-      user_json = JSON(response.body)
-      expect(user_json["first_name"]).to eq "Sophie"
-      expect(user_json["last_name"]).to eq "Figgis"
+    it "returns nothing" do 
+      expect(response.body).to eq ""
+      expect(User.count).to eq(0)
     end
   end
 
