@@ -65,4 +65,22 @@ RSpec.describe ProjectsController, type: :controller do
     end
   end
 
+  describe "DELETE /users" do
+    before do
+      @user = User.create!(first_name: "Dan", last_name: "Garland")
+      @project = @user.projects.create!(name: "Gravy Train", description: "saying some stuff about project")
+      delete :destroy, params: {:id => @project.id}, :format => :json
+    end
+
+    it "returns 200" do
+      expect(response.status).to eq(204)
+    end
+
+    it "returns nothing" do 
+      expect(response.body).to eq ""
+      expect(Project.count).to eq(0)
+      expect(User.count).to eq(1)
+    end
+  end
+
 end
