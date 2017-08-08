@@ -1,8 +1,8 @@
 class ProjectsController < ApplicationController
-  before_action :find_user, :only => [:show, :update, :destroy]
+  before_action :find_project, :only => [:show, :update, :destroy]
 
   def index
-    @projects = Project.all
+    @projects = Project.all.filter_by_user(params[:user_id])
   end
 
   def show
@@ -20,10 +20,10 @@ class ProjectsController < ApplicationController
 
   private
   def project_params
-    params.require(:project).permit(:name, :description, :link, :img_url)
+    params.require(:project).permit("name", "description", "link", "imgUrl", "id", "userId" ).transform_keys { |k| k.underscore }
   end
 
-  def find_user
+  def find_project
     @project = Project.find(params[:id])
   end
 end
