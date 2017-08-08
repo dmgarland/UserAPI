@@ -8,7 +8,7 @@ RSpec.describe ProjectsController, type: :controller do
       @user = User.create!(first_name: "Sophie", last_name: "Figgis")
       @project = @user.projects.create!(:name => "Some project", :description => "saying some stuff about project")
 
-      get :index, :format => :json
+      get :index, params: {:user_id => @project.user_id}, :format => :json
     end
 
     it "returns 200" do
@@ -28,7 +28,7 @@ RSpec.describe ProjectsController, type: :controller do
     before do
       @user = User.create!(first_name: "Sophie", last_name: "Figgis")
       @project = @user.projects.create!(:name => "Some project", :description => "saying some stuff about project")
-      get :show, params: {:id => @project.id}, :format => :json
+      get :show, params: {:id => @project.id, :user_id => @project.user_id}, :format => :json
     end
 
     it "returns 200" do
